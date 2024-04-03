@@ -1,8 +1,6 @@
 <?php
 
-session_start();
-
-class Controller {
+class ControllerImage {
 
     public function uploadImage()
     {
@@ -11,7 +9,7 @@ class Controller {
 
             $fileName = basename($_FILES['image']['name']);
             $targetFilePath = $targetDir . $fileName;
-            $_SESSION['name'] = $fileName;
+            $name = $fileName;
 
             if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
                 $sourcePath = "images/$fileName";
@@ -28,7 +26,7 @@ class Controller {
                 $destinationFolder = 'photo/';
 
                 $newImageName = $_POST['name'].'.jpg';
-                $_SESSION['newName'] = $newImageName;
+                $newName = $newImageName;
 
                 $newImagePath = $destinationFolder . $newImageName;
 
@@ -36,9 +34,8 @@ class Controller {
 
                 imagedestroy($sourceImage);
                 imagedestroy($newImage);
-
+                include 'View/add.php';
                 include 'View/View.php';
-                header('Location:index.php');
                 exit;
             }
         }

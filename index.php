@@ -1,15 +1,13 @@
 <?php
-include 'Controller/controlImage.php';
-$controller = new Controller();
-
-$controller->getPhoto();
-
-if (isset($_GET['action'])) {
-
-    switch ($_GET['action']) {
+session_start();
+include 'Controller/ControllerImage.php';
+$action = $_GET['action'] ?? null;
+    switch ($action) {
         case 'add':
+            $controller = new ControllerImage();
             $controller->uploadImage();
-            break;
+        default:
+            $controller = new ControllerImage();
+            $controller->getPhoto();
     }
-}
 

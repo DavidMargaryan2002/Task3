@@ -15,6 +15,5 @@
     <input type="number" name="height" placeholder="Երկարություն">
     <button type="submit" name="submit">Կատարել</button>
 </form>
-<?php include 'View.php'?>
 </body>
 </html>
