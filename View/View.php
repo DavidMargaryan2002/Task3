@@ -1,4 +1,3 @@
-<?php include 'Controller/controlImage.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +14,7 @@
     </div>
     <div class="image-wrapper">
         <h1>Փոփոխված</h1>
-        <img src="photo/<?= $_SESSION['newname']?>" alt="Image 2">
+        <img src="photo/<?= $_SESSION['newName']?>" alt="Image 2">
     </div>
 </div>
 </body>

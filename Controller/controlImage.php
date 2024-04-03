@@ -1,38 +1,53 @@
 <?php
+
 session_start();
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
-    $targetDir = '../images/';
 
-    $fileName = basename($_FILES['image']['name']);
-    $targetFilePath = $targetDir . $fileName;
-    $_SESSION['name'] = $fileName;
+class Controller {
 
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+    public function uploadImage()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
+            $targetDir = 'images/';
 
-        $sourcePath = "../images/$fileName";
+            $fileName = basename($_FILES['image']['name']);
+            $targetFilePath = $targetDir . $fileName;
+            $_SESSION['name'] = $fileName;
 
-        $sourceImage = imagecreatefromjpeg($sourcePath);
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+                $sourcePath = "images/$fileName";
 
-        $newWidth = $_POST['width'];
-        $newHeight = $_POST['height'];
+                $sourceImage = imagecreatefromjpeg($sourcePath);
 
-        $newImage = imagecreatetruecolor($newWidth, $newHeight);
+                $newWidth = $_POST['width'];
+                $newHeight = $_POST['height'];
 
-        imagecopyresampled($newImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, imagesx($sourceImage), imagesy($sourceImage));
+                $newImage = imagecreatetruecolor($newWidth, $newHeight);
 
-        $destinationFolder = '../photo/';
+                imagecopyresampled($newImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, imagesx($sourceImage), imagesy($sourceImage));
 
-        $newImageName = $_POST['name'].'.jpg';
-        $_SESSION['newname'] = $newImageName;
+                $destinationFolder = 'photo/';
 
-        $newImagePath = $destinationFolder . $newImageName;
+                $newImageName = $_POST['name'].'.jpg';
+                $_SESSION['newName'] = $newImageName;
 
-        imagejpeg($newImage, $newImagePath);
+                $newImagePath = $destinationFolder . $newImageName;
 
-        imagedestroy($sourceImage);
-        imagedestroy($newImage);
+                imagejpeg($newImage, $newImagePath);
 
-        header('Location:../index.php');
+                imagedestroy($sourceImage);
+                imagedestroy($newImage);
+
+                include 'View/View.php';
+                header('Location:index.php');
+                exit;
+            }
+        }
+    }
+
+    public function getPhoto()
+    {
+        include 'View/add.php';
     }
 }
-?>
+
+
